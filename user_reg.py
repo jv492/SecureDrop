@@ -4,7 +4,7 @@ from getpass import getpass
 import json
 import secrets
 
-# Checks password and if it passes hopefully hashes it and stores
+# Checks password and stores it dict of json
 
 def user_registration(file):
     name = input("Enter Full Name: ")
@@ -31,7 +31,7 @@ def user_registration(file):
         check = password_chk(password)
 
    
-
+#Make a User dict and add the email and password to it
     dict = {}
     dict["User"] = []
     dict["User"].append({email: {"name": name, "password": password}})
