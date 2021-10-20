@@ -1,4 +1,4 @@
-import re
+import re #Regualr Expression let check if the string matches my expression. For example to check my passwords
 from getpass import getpass
 import crypt
 import json
