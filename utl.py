@@ -86,8 +86,6 @@ def check_email():
             attemps += 1
     return None
 
-def hash_pw(password, salt):
-    return crypt.crypt(password, salt)
 
 # Make sure Email does not already exits these next three function will check that
 
