@@ -30,12 +30,11 @@ def user_registration(file):
         second_pass = getpass("Please re-enter password")
         check = password_chk(password)
 
-    salt = secrets.token_hex(8)
-    h_password = hash_pw(password, salt)
+   
 
     dict = {}
     dict["User"] = []
-    dict["User"].append({email: {"name": name, "password": h_password, "salt": salt}})
+    dict["User"].append({email: {"name": name, "password": password}})
     json.dump(dict, file)
     file.close()
     print("User sucessfully registered, please login again to begin!")
