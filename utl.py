@@ -3,18 +3,16 @@ from getpass import getpass
 import crypt
 import json
 
-
+#global veriables
 max_times = 3
 
 user_list = "./user_list.json"
-
-online_contacts = []
 
 email = ""
 
 user_name = ""
 
-
+#function to ensure the password is strong
 def password_chk(password):
     # Make sure the password is strong
     # check for  8 char length or more
@@ -55,25 +53,25 @@ def password_chk(password):
         "symbol_error": symbol_err,
     }
 
-
+#get password using getpass
 def get_password():
     password = getpass("Enter password: ")
     return password
 
-
+#register email
 def reg_email():
     email = input("Enter E-mail:")
     return email
 
-
+#get email and password
 def get_email_and_password():
     password = get_password()
     email = reg_email()
     return(email, password)
 
-
+#confirming email is correct using regex
 def check_email():
-    # Makes user to enter there password
+    # Makes user to enter their password
     # User has 3 tries
 
     regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
@@ -91,27 +89,24 @@ def check_email():
             attemps += 1
     return None
 
-
+#encrypt password
 def hash_password(password, salt):
     return crypt.crypt(password, salt)
 
-
-def add_contacts():
+#add new contact
+def add_contact():
     file = open('user_list.json', 'r+')
     data = json.load(file)
-    # get the user email
+
     user_email = list(data["Users"][0].keys())[0]
     u_dictionary = data["Users"][0][user_email]
     name = input("Enter Full Name: ")
     email = reg_email()
     u_dictionary["contacts"] = [
         {"email": email, "name": name}
-    ]  # create new field name -> contacts
-    # add the email and name the user wants to contact to their contacts
-    data["Users"][0][
-        user_email
-    ] = u_dictionary  # add the email and name the user wants to contact to their contacts
-    file.seek(0)  # return file pointer to beginning of json file
-    json.dump(data, file)  # add new information to json file
-    print("Contact Added.")
+    ]
+    data["Users"][0][user_email] = u_dictionary
+    file.seek(0)
+    json.dump(data, file)
+    print("\nContact added successfully.\n")
     file.close()

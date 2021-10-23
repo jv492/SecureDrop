@@ -1,13 +1,11 @@
 from utl import reg_email, get_password, password_chk
 from utl import hash_password, user_list
 from getpass import getpass
-import os
 import json
 import secrets
 
-# Checks password and if it passes hopefully hashes it and stores
 
-
+#function to register new user
 def user_registration(file):
     name = input("Enter Full Name: ")
     email = reg_email()
@@ -15,7 +13,7 @@ def user_registration(file):
     second_pass = getpass("Please re-enter password: ")
     check = password_chk(password)
 
-    # Loop until password is right
+    #Verifying that the user is using a strong password
     while not check.get("password_ok") or password != second_pass:
         if password != second_pass:
             print("Wrong password.")
@@ -28,29 +26,20 @@ def user_registration(file):
                 "\n 1 uppercase or more"
                 "\n 1 lowercase or more"
             )
-        password = getpass("Enter password:")
         second_pass = getpass("Please re-enter password")
         check = password_chk(password)
 
+    #password hashing
     salt = secrets.token_hex(8)
     password = hash_password(password, salt)
 
+    #creating an input to add to json file for user registration
     dict = {}
-
-    if os.path.getsize(user_list) == 0:
-        dict["Users"] = []
-        dict["Users"].append(
+    dict["Users"] = []
+    dict["Users"].append(
             {email: {"name": name, "password": password, "salt": salt}})
-        json.dump(dict, file)
-        file.close()
-    else:
-        with open('user_list.json', mode='r') as file:
-            dict = json.load(file)
-            dict["Users"].append(
-                {email: {"name": name, "password": password, "salt": salt}})
-        with open('user_list.json', mode='w') as file:
-            json.dump(dict, file)
-        file.close()
+    json.dump(dict, file)
+    file.close()
 
-    print("User sucessfully registered, please login again to begin!")
+    print("\nUser sucessfully registered, please login again to begin!")
     exit()
