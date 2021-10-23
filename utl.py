@@ -91,5 +91,27 @@ def check_email():
             attemps += 1
     return None
 
+
 def hash_password(password, salt):
     return crypt.crypt(password, salt)
+
+
+def add_contacts():
+    file = open('user_list.json', 'r+')
+    data = json.load(file)
+    # get the user email
+    user_email = list(data["Users"][0].keys())[0]
+    u_dictionary = data["Users"][0][user_email]
+    name = input("Enter Full Name: ")
+    email = reg_email()
+    u_dictionary["contacts"] = [
+        {"email": email, "name": name}
+    ]  # create new field name -> contacts
+    # add the email and name the user wants to contact to their contacts
+    data["Users"][0][
+        user_email
+    ] = u_dictionary  # add the email and name the user wants to contact to their contacts
+    file.seek(0)  # return file pointer to beginning of json file
+    json.dump(data, file)  # add new information to json file
+    print("Contact Added.")
+    file.close()
