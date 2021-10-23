@@ -91,17 +91,5 @@ def check_email():
             attemps += 1
     return None
 
-
-# Make sure Email does not already exits these next three function will check that
-
-def user_contact_exist(user_dict, email):
-    count = 0
-    for x in user_dict:
-        if user_dict[count].get("email") == email:
-            return True
-        count += 1
-    return False
-
-
 def hash_password(password, salt):
     return crypt.crypt(password, salt)
