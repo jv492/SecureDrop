@@ -34,6 +34,8 @@ def main():
     elif value == "3":
         print("Exiting... \n")
         exit()
+     #In order to add extra menu option to add contacts we would need change 3 to Add Contacts then make a new menu option 4
+     # elif value "3" - add contact to a hard coded json or in some other fashion via inputs by user somewhat like user_reg
 
 
 if __name__ == "__main__":
